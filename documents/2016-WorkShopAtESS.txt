@@ -1,0 +1,49 @@
+https://indico.esss.lu.se/event/507/
+https://indico.esss.lu.se/event/507/timetable/#20160525.detailed
+
+
+Here is the suggested Agenda for 2 hours workshop:
+
+Introduction, 5 minutes
+
+
+Round table   10 minutes
+ who is doing what
+
+Hardware - 15 minutes
+ - Stepper vs Servo
+ - Microstepping vs 5 pole ?
+ - Piezo
+ - others
+
+Motion feedback - 15 minutes
+ - Open loop
+   Open loop with encoder to verify the position after the move
+   Closed loop with encoder 
+   More than one encoder (shaft - target)
+
+
+Single Axis Motion Control with EPICS - 15 minutes
+ - Model 3 driver ?
+ - motorRecord
+ - patches for motorRecord ?
+ 
+
+Coordinated multi axis - 15 minutes
+ - Axis groups
+ - Virtual axes
+ - Logical axis
+ - profile move
+
+Applications - 15 minutes
+ - Position read back
+ - Wirescanner
+ - Usage of GPIO
+
+
+Community - 15 minutes
+ - Read the EPICS mailing list tech-talk
+ - Code on a public repo (github, others ?)
+ - Planned developments
+ 
+Summary - 15 minutes
