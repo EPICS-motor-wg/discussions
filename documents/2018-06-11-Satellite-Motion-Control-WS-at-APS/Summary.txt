@@ -1,0 +1,28 @@
+Motion control WS on Tuesday, 2018-06-11
+
+  - Around 20..25 people attended, I didn't manage to count more precise
+  - Niko Kivel @ PSI gave a presentation about the experience
+    with the DeltaTau PowerPMAC.
+  - Kevein Peterson @ APS talked about splitting the motor module
+    into Git submodules.
+  - We talked about different ways to control Piezo motors.
+    Either with the controller from vendor using TCP/IP or USB.
+    Or using an analog output from a motion controller
+    which feeds the Piezo controller and closes the loop.
+  - Different discussions about amplifiers for piezos,
+    which produce less electrical noise than others.
+    I didn't record all the details.
+  - Some people at PSI want to use the "fully configured"
+    motion controller approach:
+    The motion controller is configured with all paramaters.
+    They are read out by the EPICS IOC from the controller
+    and placed in the corresponding motorRecord fields.
+    Others don't seem to want that (yet ?)
+  - Some reports from PSI that the "STOP" command did not work
+    as expected. I am more interested in details & log files.
+    Hopefully we can run a test with our patched motorRecord,
+    which has some more logging & bug fixes.
+  - Status from ESS about improvements and problems with the
+    motor module, and another one about the ongoing HW and SW
+    standardization efforts.
+
