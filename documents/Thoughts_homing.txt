@@ -1,0 +1,119 @@
+Background:
+
+https://github.com/EPICS-motor-wg/epics-mwg-discussions/blob/master/documents/1609227_discussion_at_APS.txt
+
+
+Requirements for homing:
+
+Today the homing is done in different ways:
+
+- DeltaTau
+  - The Turbo PMAC controllers from DeltaTau external scripts:
+    https://github.com/epics-modules/tpmac/blob/master/documentation/Motion_control_basics.html
+
+  - The Power PMAC can use a HOME function, regardless direction:
+    https://github.com/Observatory-Sciences/powerPMAC/blob/master/powerPMACApp/src/powerPmacAxis.cpp
+    (And may be the turbo PMAC can do the same)
+
+- Newport XPS:
+  https://github.com/epics-modules/motor/blob/master/motorApp/NewportSrc/XPSAxis.cpp
+
+  The home() function does not use any of the parametersvfrom MR.
+  However, when sitting on a limit switch, the homing may fail
+   on older firmware:
+   http://www.aps.anl.gov/epics/tech-talk/2016/msg00424.php
+
+- ESRF IcePAP:
+  https://github.com/EuropeanSpallationSource/m-epics-IcePAP/blob/151013_1053_debug_CSS/epicsIOC/IcePAPApp/src/IcePAPAxis.cpp
+  The IcePAP uses a HOME sequence, all parameters are set up outside motor recors.
+
+
+- EtherCAT bases systems:
+  https://github.com/EuropeanSpallationSource/MCAG_Base_Project/blob/master/epics/m-epics-eemcu/eemcuApp/src/eemcuAxis.cpp
+  The EtherCAT based systems use an internal homing procedure.
+  This parameters are used:
+  - Homing procedure (Low LS, High LS, home switch ...
+  - Velocity towards towards the CAM
+  - Velocity off the CAM
+  The original idea was to use JVEL as "Velocity towards towards the CAM" and
+  HVEL for "Velocity off the CAM" and to add a PV for homing procedure.
+  Changes in the homing procedure needs changes in the soft limits in the
+  motion controller,and these changes need to be done by a motion engineer
+  and not a user, I tend to have all the homing parameters outside EPICS
+  (Rather than a mixture: Some PV's, some information in a config file)Velocity off the CAM
+
+
+- Galil
+  https://github.com/motorapp/Galil-3-0/blob/master/3-3/GalilSup/src/GalilAxis.cpp
+  Uses acceleration, maxVelocity, but not forward
+  Uses a "homeAllowed" flag.
+
+
+- parker 6k
+  https://github.com/mp49/parker6k/blob/master/parker6kApp/src/parker6kAxis.cpp
+  uses max_velocity, acceleration, forwards from MR
+
+
+- Pro-Dex OMS
+   https://github.com/epics-modules/motor/blob/master/motorApp/OmsAsynSrc/omsBaseAxis.cpp
+  - The asyn driver for OMS uses all the parameters from the motor record:
+     min_velocity, max_velocity, acceleration, forwards
+   
+
+
+Possible changes to the axisRecord:
+There are different options:
+
+(1)  Move the homing completely out of the record.
+     good: Keeps code simpler, users can not mess up things
+           by pressing the home button.
+     bad:  Many applications wants to keep an EPICS interface
+           for homing, and need to invent their own PV's.
+           Another problem is that we will lose the possibility
+           to do automated tests, which can be shared.
+
+
+(2)  Keep everything as it is
+     good: No code changes needed
+     bad:  When sitting on a limit switch, some controllers can
+           do a perfect home.
+          
+
+(3)  Move the check for limit switch from record into driver.
+     This can be done in a gerneric way.
+     good: works for everybody
+     bad:  some coding needed, but that is not a problem
+
+(4)  Add a "homing allowed" field. Some applications already have this.
+     Whenever axes may block each other due to mechanical reasons,
+     or whenever an axis can not be homed because other equipment is
+     in its's way, or whenever a user should not be able to home
+     the motor due to other reasons, homing may be forbidden.
+
+     See Galil-3-0/3-3/GalilSup/Db/galil_motor_extras.template:
+     Mark Clift from the Australien Synchrotron uses a PV
+        "_HOMEALLOWED_CMD"
+        
+       record(mbbo,"$(P):$(M)_HOMEALLOWED_CMD")
+       {
+          field(DESC, "Home allowed")
+          field(PINI, "YES")
+          field(DTYP, "asynInt32")
+          field(ZRST, "None")
+          field(ONST, "Reverse")
+          field(TWST, "Forward")
+          field(THST, "Both")
+
+
+     Matthew Pearson from SNS uses a home_visibility.db, which
+     defines if the home button is visible in the ui:
+     record(bo, "$(P)$(M):HOMEVIS")
+     
+
+At the moment I am in the mood to implement (3) and (4)
+
+
+     
+
+
+
