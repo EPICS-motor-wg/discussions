@@ -1,0 +1,35 @@
+Motion Control Satellite WS at the EPICS collaboration meeting @ ITER
+
+"We like to move it"
+
+Suggestions for an agenda, suggestions are welcome.
+
+- Welcome everybody: opening of the WS
+- Round table presentations,
+  Who is who and doing what ?
+  Special interests, experiences, questions ?
+
+- Presentations
+  (Who ever wants to present, examples for topics)
+  What motors do you use ?
+    Stepper, Servo, Piezo, others ?
+  Which controllers do you use ?
+  Which controllers do you want to use ?
+  Interesting applications ?
+  Experiences with certain HW, SW ?
+
+- model 3 driver, optional, may be
+  how to write one (is there an interest ?)
+
+- Status @ ESS, patches:
+  - Digg out all fields from the controller
+  - Skip MRES, use EGU to and from the controller
+  - Un-nannyfy the record
+
+- motorRecord / EPICS motor module (round table)
+  fixes at your site,
+  limitations,
+  problems,
+  wishes
+
+- Open discussions
