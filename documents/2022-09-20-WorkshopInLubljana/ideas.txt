@@ -1,0 +1,32 @@
+We are planning a Motion Control Workshop as a satellite to the
+EPICS collaboration meeting.
+
+We are aiming for a 2 hours session.
+Of course, discussions can continue afterwards.
+
+Torsten Bögershausen will lead the workshop.
+
+What is it about?
+Come together, meet people, exchange experiences, learn from each other.
+
+It would be good, if we have an answer to these 3 questions:
+
+  Do you want to give a presentation ?
+  - Experiences in general, special controllers, use cases.
+  - Planned (or not yet planned) updates/upgrades at you side.
+  - Are you using steppers, servos, piezos, other actuators ?
+  - Feedback systems ?
+  - Coordinated motions ?
+  - Connections to "the timing" system ?
+
+  Do you want to have a question to discuss ?
+
+  Do you want to listen only and learn from others.
+
+When I have a better overview, I will compile a better agenda.
+
+Suggestions, questions ?
+
+Please send emails:
+torsten.bogershausen@ess.eu
+
