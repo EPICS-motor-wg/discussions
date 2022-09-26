@@ -1,0 +1,78 @@
+Summary of the motion WS, 2022-09-20
+Torsten Bögershausen, ESS
+
+- 30-40 people participating, majority via zoom
+- Seeing new faces, which is good
+- Using zoom worked "fully OK" (tm)
+
+- 2 shortened presentations about EtherCAT HW,
+    TwinCAT SW and ECMC SW solutions used at
+    ESS and collaborating facilities
+
+- Good time for discussions, some highlights:
+
+
+- functional safety: (There is TwinSAFE, but)
+    Personal protection:
+      always separate HW:
+      switches, cables, safety PLCs (PPS group)
+    Machine protection: similar
+    Equipment protection: (collision detection)
+       probably possible inside the motion controller.
+       Use a kill switch: First the limit switch that goes
+       into the controller, then the kill switch
+       that cuts the power, then comes the wall.
+
+     In any case: Make a hazard analyses:
+       - Risk
+       - damage
+       - impact
+       - costs
+
+- Side note:
+  The epics motor module has the motorRecord.cc,
+  a model3 generic driver and specific drivers for
+  each and every vendor/model.
+  If not all implementations for different controllers are the same,
+  (and motor spend effort to make them uniform):
+  I think that those subtle differences in the driver(s)
+  should go to tech talk.
+  And result in Git patches: PR, MR
+
+- Fly scan with absolute encoders, question from Li Ji
+  (No good answers yet)
+
+- Replacement of obsolete deltaTau Turbo PMAC
+  (The question came too late for the WS.
+   But there are modern controllers ;-)
+
+- Side note: A model 3 driver does allow the usage of
+  record(motor, "$(P)$(R)")
+  side-by-side with e.g.
+  record(ao, "$(P)$(R)-MoveAbs")
+
+- motorRecord is a good abstraction for higher control systems
+  The model 3 driver allows the motorRecord to be used.
+  caput IOC:m1.VAL (motor Record)
+  caput IOC:m1-MoveAbs.VAL (ao record)
+
+  However, you can use callback & wait, to wait for the
+  motion to be finished, e.g.
+  Move a motor from 6 to 16 mm, 1mm/sec):
+  $ time caput -w 20 -c  IOC:m1  16
+    Old : IOC:m1                  6
+    New : IOC:m1                 16
+    real    0m10.476s
+  #versus
+  $ time caput -w 20 -c  IOC:m1-MoveAbs  16
+    Old : IOC:m1-MoveAbs                 6
+    New : IOC:m1-MoveAbs                 16
+    real    0m0.058s
+
+- What next:
+  See you at the next EPICS meeting (hopefully)
+  Some follow-up meetings planned to discuss specific item.
+
+- learning about epics motor, motorRecord, model 3:
+  https://www.youtube.com/embed/N5tzK95j4dg
+
