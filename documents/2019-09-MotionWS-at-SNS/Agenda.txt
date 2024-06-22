@@ -1,8 +1,9 @@
 Motion Control Satellite WS at the EPICS collaboration meeting @ SNS
 
-"We like to move it"
+This session will be held remote: "We like to move it"
 
-Suggestions for an agenda, suggestions are welcome.
+This is a raw version an agenda, suggestions are welcome:
+mailto:torsten.bogershausen@ess.eu
 
 - Welcome everybody: opening of the WS
 - Round table presentations,
@@ -33,3 +34,6 @@ Suggestions for an agenda, suggestions are welcome.
   wishes
 
 - Open discussions
+
+Welcome!
+mailto:torsten.bogershausen@ess.eu
